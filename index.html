@@ -248,7 +248,7 @@
 <script>
     let loadedCount = 0;       // अब तक कितने सवाल लोड हुए
     const batchSize = 50;      // एक बार में कितने सवाल लोड करने हैं
-    let score = 0;             // सही उत्तरों का स्कोर
+    let constitution_score = 0;             // सही उत्तरों का स्कोर
     let attemptedCount = 0;    // कुल कितने सवालों का उत्तर यूजर ने दे दिया है
     
     // लोकल स्टोरेज से पुराने उत्तरों को लोड करना
@@ -344,7 +344,7 @@
         if (selectedIdx === correctIdx) {
             // सही उत्तर
             selectedButton.classList.add("correct");
-            score++;
+            constitution_score++;
             feedbackElement.innerText = "बिल्कुल सही जवाब! 🎉";
             feedbackElement.className = "feedback-msg feedback-correct";
         } else {
@@ -360,7 +360,7 @@
         // लोकल स्टोरेज में सेव करें
         savedAnswers[globalIndex] = selectedIdx;
         localStorage.setItem("constitutionData", JSON.stringify(savedAnswers));
-        localStorage.setItem("constitution_quizScore", score);
+        localStorage.setItem("constitution_quizScore", constitution_score);
         localStorage.setItem("quizAttempted", attemptedCount);
 
         updateScoreBoard();
@@ -368,7 +368,7 @@
 
     // स्कोर अपडेट करने वाला फंक्शन
     function updateScoreBoard() {
-        scoreDisplay.innerText = `स्कोर: ${score} / ${attemptedCount}`;
+        scoreDisplay.innerText = `स्कोर: ${constitution_score} / ${attemptedCount}`;
     }
 
     // स्क्रॉल करते समय अधिक प्रश्न लोड करने की कार्यप्रणाली
@@ -412,7 +412,7 @@
     // शुरुआत में पहली बैच (प्रथम 10 प्रश्न) लोड करें
     document.addEventListener("DOMContentLoaded", () => {
         // लोकल स्टोरेज से पुराना स्कोर रीस्टोर करें
-        score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
+        constitution_score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
         attemptedCount = parseInt(localStorage.getItem("quizAttempted")) || 0;
         updateScoreBoard();
 
