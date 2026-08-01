@@ -360,7 +360,7 @@
         // लोकल स्टोरेज में सेव करें
         savedAnswers[globalIndex] = selectedIdx;
         localStorage.setItem("constitutionData", JSON.stringify(savedAnswers));
-        localStorage.setItem("quizScore", score);
+        localStorage.setItem("constitution_quizScore", score);
         localStorage.setItem("quizAttempted", attemptedCount);
 
         updateScoreBoard();
@@ -403,7 +403,7 @@
     clearStorageBtn.addEventListener("click", () => {
         if(confirm("क्या आप अपना सारा क्विज़ डेटा और स्कोर डिलीट करना चाहते हैं?")) {
             localStorage.removeItem("constitutionData");
-            localStorage.removeItem("quizScore");
+            localStorage.removeItem("constitution_quizScore");
             localStorage.removeItem("quizAttempted");
             location.reload(); // पेज रिफ्रेश करके शुरुआत से लोड करें
         }
@@ -412,7 +412,7 @@
     // शुरुआत में पहली बैच (प्रथम 10 प्रश्न) लोड करें
     document.addEventListener("DOMContentLoaded", () => {
         // लोकल स्टोरेज से पुराना स्कोर रीस्टोर करें
-        score = parseInt(localStorage.getItem("quizScore")) || 0;
+        score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
         attemptedCount = parseInt(localStorage.getItem("quizAttempted")) || 0;
         updateScoreBoard();
 
