@@ -361,7 +361,7 @@
         savedAnswers[globalIndex] = selectedIdx;
         localStorage.setItem("constitutionData", JSON.stringify(savedAnswers));
         localStorage.setItem("constitution_quizScore", constitution_score);
-        localStorage.setItem("quizAttempted", constitution_attemptedCount);
+        localStorage.setItem("contitution_quizAttempted", constitution_attemptedCount);
 
         updateScoreBoard();
     }
@@ -404,7 +404,7 @@
         if(confirm("क्या आप अपना सारा क्विज़ डेटा और स्कोर डिलीट करना चाहते हैं?")) {
             localStorage.removeItem("constitutionData");
             localStorage.removeItem("constitution_quizScore");
-            localStorage.removeItem("quizAttempted");
+            localStorage.removeItem("contitution_quizAttempted");
             location.reload(); // पेज रिफ्रेश करके शुरुआत से लोड करें
         }
     });
@@ -413,7 +413,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         // लोकल स्टोरेज से पुराना स्कोर रीस्टोर करें
         constitution_score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
-        constitution_attemptedCount = parseInt(localStorage.getItem("quizAttempted")) || 0;
+        constitution_attemptedCount = parseInt(localStorage.getItem("contitution_quizAttempted")) || 0;
         updateScoreBoard();
 
         if (typeof quizData !== 'undefined' && quizData.length > 0) {
