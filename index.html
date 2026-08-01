@@ -249,7 +249,7 @@
     let loadedCount = 0;       // अब तक कितने सवाल लोड हुए
     const batchSize = 50;      // एक बार में कितने सवाल लोड करने हैं
     let constitution_score = 0;             // सही उत्तरों का स्कोर
-    let attemptedCount = 0;    // कुल कितने सवालों का उत्तर यूजर ने दे दिया है
+    let constitution_attemptedCount = 0;    // कुल कितने सवालों का उत्तर यूजर ने दे दिया है
     
     // लोकल स्टोरेज से पुराने उत्तरों को लोड करना
     let savedAnswers = JSON.parse(localStorage.getItem("constitutionData")) || {};
@@ -339,7 +339,7 @@
             btn.disabled = true;
         }
 
-        attemptedCount++;
+        constitution_attemptedCount++;
 
         if (selectedIdx === correctIdx) {
             // सही उत्तर
@@ -361,14 +361,14 @@
         savedAnswers[globalIndex] = selectedIdx;
         localStorage.setItem("constitutionData", JSON.stringify(savedAnswers));
         localStorage.setItem("constitution_quizScore", constitution_score);
-        localStorage.setItem("quizAttempted", attemptedCount);
+        localStorage.setItem("quizAttempted", constitution_attemptedCount);
 
         updateScoreBoard();
     }
 
     // स्कोर अपडेट करने वाला फंक्शन
     function updateScoreBoard() {
-        scoreDisplay.innerText = `स्कोर: ${constitution_score} / ${attemptedCount}`;
+        scoreDisplay.innerText = `स्कोर: ${constitution_score} / ${constitution_attemptedCount}`;
     }
 
     // स्क्रॉल करते समय अधिक प्रश्न लोड करने की कार्यप्रणाली
@@ -413,7 +413,7 @@
     document.addEventListener("DOMContentLoaded", () => {
         // लोकल स्टोरेज से पुराना स्कोर रीस्टोर करें
         constitution_score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
-        attemptedCount = parseInt(localStorage.getItem("quizAttempted")) || 0;
+        constitution_attemptedCount = parseInt(localStorage.getItem("quizAttempted")) || 0;
         updateScoreBoard();
 
         if (typeof quizData !== 'undefined' && quizData.length > 0) {
