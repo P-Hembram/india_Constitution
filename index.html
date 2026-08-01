@@ -248,8 +248,8 @@
 <script>
     let loadedCount = 0;       // अब तक कितने सवाल लोड हुए
     const batchSize = 50;      // एक बार में कितने सवाल लोड करने हैं
-    let constitution_score = 0;             // सही उत्तरों का स्कोर
-    let constitution_attemptedCount = 0;    // कुल कितने सवालों का उत्तर यूजर ने दे दिया है
+    let score = 0;             // सही उत्तरों का स्कोर
+    let attemptedCount = 0;    // कुल कितने सवालों का उत्तर यूजर ने दे दिया है
     
     // लोकल स्टोरेज से पुराने उत्तरों को लोड करना
     let savedAnswers = JSON.parse(localStorage.getItem("constitutionData")) || {};
@@ -257,7 +257,7 @@
     const quizContainer = document.getElementById("quiz-container");
     const scoreDisplay = document.getElementById("score-display");
     const loadingSpinner = document.getElementById("loading-spinner");
-    const clearStorageBtn = document.getElementsByClassName("clear-storage-btn");
+    const clearStorageBtn = document.getElementById("clear-storage-btn");
 
     // प्रश्न को स्क्रीन पर रेंडर (क्रिएट) करने का फंक्शन
     function createQuestionCard(qData, globalIndex) {
@@ -339,12 +339,12 @@
             btn.disabled = true;
         }
 
-        constitution_attemptedCount++;
+        attemptedCount++;
 
         if (selectedIdx === correctIdx) {
             // सही उत्तर
             selectedButton.classList.add("correct");
-            constitution_score++;
+            score++;
             feedbackElement.innerText = "बिल्कुल सही जवाब! 🎉";
             feedbackElement.className = "feedback-msg feedback-correct";
         } else {
@@ -360,15 +360,15 @@
         // लोकल स्टोरेज में सेव करें
         savedAnswers[globalIndex] = selectedIdx;
         localStorage.setItem("constitutionData", JSON.stringify(savedAnswers));
-        localStorage.setItem("constitution_quizScore", constitution_score);
-        localStorage.setItem("contitution_quizAttempted", constitution_attemptedCount);
+        localStorage.setItem("constitution_quizScore", score);
+        localStorage.setItem("quizAttempted", attemptedCount);
 
         updateScoreBoard();
     }
 
     // स्कोर अपडेट करने वाला फंक्शन
     function updateScoreBoard() {
-        scoreDisplay.innerText = `स्कोर: ${constitution_score} / ${constitution_attemptedCount}`;
+        scoreDisplay.innerText = `स्कोर: ${score} / ${attemptedCount}`;
     }
 
     // स्क्रॉल करते समय अधिक प्रश्न लोड करने की कार्यप्रणाली
@@ -404,7 +404,7 @@
         if(confirm("क्या आप अपना सारा क्विज़ डेटा और स्कोर डिलीट करना चाहते हैं?")) {
             localStorage.removeItem("constitutionData");
             localStorage.removeItem("constitution_quizScore");
-            localStorage.removeItem("contitution_quizAttempted");
+            localStorage.removeItem("quizAttempted");
             location.reload(); // पेज रिफ्रेश करके शुरुआत से लोड करें
         }
     });
@@ -412,8 +412,8 @@
     // शुरुआत में पहली बैच (प्रथम 10 प्रश्न) लोड करें
     document.addEventListener("DOMContentLoaded", () => {
         // लोकल स्टोरेज से पुराना स्कोर रीस्टोर करें
-        constitution_score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
-        constitution_attemptedCount = parseInt(localStorage.getItem("contitution_quizAttempted")) || 0;
+        score = parseInt(localStorage.getItem("constitution_quizScore")) || 0;
+        attemptedCount = parseInt(localStorage.getItem("quizAttempted")) || 0;
         updateScoreBoard();
 
         if (typeof quizData !== 'undefined' && quizData.length > 0) {
