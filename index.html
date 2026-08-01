@@ -400,14 +400,19 @@
     });
 
     // लोकल स्टोरेज क्लियर (डेटा डिलीट) करने का फंक्शन
-    clearStorageBtn.addEventListener("click", () => {
-        if(confirm("क्या आप अपना सारा क्विज़ डेटा और स्कोर डिलीट करना चाहते हैं?")) {
-            localStorage.removeItem("constitutionData");
-            localStorage.removeItem("constitution_quizScore");
-            localStorage.removeItem("constitution_quizAttempted");
-            location.reload(); // पेज रिफ्रेश करके शुरुआत से लोड करें
-        }
+    document.querySelectorAll(".clear-storage-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            if(confirm("क्या आप अपना सारा क्विज़ डेटा और स्कोर डिलीट करना चाहते हैं?")) {
+                localStorage.removeItem("constitutionData");
+                localStorage.removeItem("constitution_quizScore");
+                localStorage.removeItem("constitution_quizAttempted");
+                location.reload();
+            }
+        });
     });
+
+
+
 
     // शुरुआत में पहली बैच (प्रथम 10 प्रश्न) लोड करें
     document.addEventListener("DOMContentLoaded", () => {
